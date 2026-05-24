@@ -111,6 +111,7 @@
       "entry": "@puckeditor/core",
       "version": "0.21.2",
       "path": "/dist/@puckeditor/core@0.21.2.system.js",
+      "css": "/dist/@puckeditor/puck.css",
       "category": "ui",
       "description": "The open-source visual editor for React.",
       "externals": ["react", "zustand"]
