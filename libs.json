@@ -36,6 +36,16 @@
       "excludeFromExternal": ["react-dom"]
     },
     {
+      "name": "react-dom/client",
+      "entry": "react-dom/client",
+      "pkg": "react-dom",
+      "version": "19.2.6",
+      "path": "/dist/react-dom/client@19.2.6.system.js",
+      "category": "react",
+      "description": "React DOM client APIs. Provides createRoot and hydrateRoot.",
+      "excludeFromExternal": ["react-dom"]
+    },
+    {
       "name": "react-jsx-runtime",
       "entry": "react/jsx-runtime",
       "pkg": "react",
