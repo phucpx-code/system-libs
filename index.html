@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Libraries — Registry</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=block');
+
+        body {
+            font-family: 'Inter', 'Helvetica Neue', sans-serif;
+            background-color: #F9F9F7;
+            color: #111111;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23111111' fill-opacity='0.04' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        * { border-radius: 0px !important; }
+
+        .font-display { font-family: 'Playfair Display', serif; }
+        .font-body { font-family: 'Lora', Georgia, serif; }
+        .font-mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div class="max-w-screen-xl mx-auto px-4">
+
+        <!-- Header -->
+        <header class="border-b-4 border-[#111111] py-4">
+            <div class="flex items-center justify-between">
+                <p class="font-mono text-xs uppercase tracking-widest text-[#525252]">Vol. 1 · May 2026 · Internal Edition</p>
+                <p class="font-mono text-xs uppercase tracking-widest text-[#525252]">system-libs v0.1.0</p>
+            </div>
+            <h1 class="font-display text-5xl sm:text-6xl lg:text-8xl font-black leading-[0.9] tracking-tighter mt-4 mb-2">
+                System Libraries
+            </h1>
+            <p class="font-body text-lg text-[#525252] leading-relaxed max-w-2xl mt-3">
+                Registry of shared JavaScript libraries bundled via Rollup for SystemJS importmap consumption.
+            </p>
+        </header>
+
+        <!-- Search Bar -->
+        <div class="border-b-2 border-[#111111] py-4 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search libraries…"
+                class="flex-1 border-none bg-transparent font-mono text-sm focus:outline-none placeholder:text-[#A3A3A3]"
+                style="border-radius: 0px;"
+            />
+            <span id="packageCount" class="font-mono text-xs text-[#A3A3A3] uppercase tracking-widest hidden sm:block"></span>
+        </div>
+
+        <!-- Filter Tags -->
+        <div class="flex items-center gap-3 py-3 border-b border-[#E5E5E0]">
+            <span class="font-mono text-xs uppercase tracking-widest text-[#737373]">Filter:</span>
+            <button class="border border-[#111111] bg-[#111111] text-[#F9F9F7] px-3 py-1 font-mono text-xs uppercase tracking-widest transition-all duration-200 min-h-[32px] cursor-pointer" data-filter="all">All</button>
+            <button class="border border-[#111111] bg-transparent text-[#111111] px-3 py-1 font-mono text-xs uppercase tracking-widest hover:bg-[#111111] hover:text-[#F9F9F7] transition-all duration-200 min-h-[32px] cursor-pointer" data-filter="css-in-js">CSS-in-JS</button>
+            <button class="border border-[#111111] bg-transparent text-[#111111] px-3 py-1 font-mono text-xs uppercase tracking-widest hover:bg-[#111111] hover:text-[#F9F9F7] transition-all duration-200 min-h-[32px] cursor-pointer" data-filter="react">React</button>
+            <button class="border border-[#111111] bg-transparent text-[#111111] px-3 py-1 font-mono text-xs uppercase tracking-widest hover:bg-[#111111] hover:text-[#F9F9F7] transition-all duration-200 min-h-[32px] cursor-pointer" data-filter="state">State</button>
+            <button class="border border-[#111111] bg-transparent text-[#111111] px-3 py-1 font-mono text-xs uppercase tracking-widest hover:bg-[#111111] hover:text-[#F9F9F7] transition-all duration-200 min-h-[32px] cursor-pointer" data-filter="ui">UI</button>
+        </div>
+
+        <!-- Library List -->
+        <div id="libraryList"></div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden py-16 text-center">
+            <p class="font-display text-2xl text-[#A3A3A3]">No libraries found.</p>
+            <p class="font-mono text-xs uppercase tracking-widest text-[#A3A3A3] mt-2">Try a different search term</p>
+        </div>
+
+        <!-- Ornamental Divider -->
+        <div class="py-8 text-center font-display text-2xl text-[#A3A3A3] tracking-[1em]">
+            &#x2727; &#x2727; &#x2727;
+        </div>
+
+        <!-- Footer -->
+        <footer class="border-t-4 border-[#111111] py-6 mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                <p class="font-mono text-xs uppercase tracking-widest text-[#737373]">
+                    Edition: Vol 1.0 · Bundled with Rollup · ESM + CJS Output
+                </p>
+                <p class="font-mono text-xs uppercase tracking-widest text-[#737373]">
+                    system-libs &copy; 2026
+                </p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        const COPY_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="0"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
+        const CHECK_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+
+        let config = null;
+
+        function copyUrl(btn, relativeUrl) {
+            const fullUrl = new URL(relativeUrl, location.href).href;
+            navigator.clipboard.writeText(fullUrl).then(() => {
+                btn.innerHTML = CHECK_ICON;
+                btn.classList.add('bg-[#111111]', 'text-[#F9F9F7]');
+                setTimeout(() => {
+                    btn.innerHTML = COPY_ICON;
+                    btn.classList.remove('bg-[#111111]', 'text-[#F9F9F7]');
+                }, 1500);
+            });
+        }
+
+        function renderLibrary(lib, index) {
+            const cdnUrl = config.baseUrl + lib.path;
+            const categoryLabel = lib.category.replace('-', '-').toUpperCase().replace('CSS-IN-JS', 'CSS-in-JS');
+            const tags = lib.tags || [];
+            const hasPkg = lib.pkg ? `<span class="font-mono text-xs text-[#737373]">Pkg <strong class="text-[#111111]">${lib.pkg}</strong></span>` : '';
+
+            const tagBadges = tags.map(tag => {
+                if (tag === 'Popular') {
+                    return `<span class="bg-[#CC0000] text-[#F9F9F7] px-2 py-0.5 font-mono text-xs uppercase tracking-widest font-bold">${tag}</span>`;
+                }
+                return `<span class="border border-[#111111] px-2 py-0.5 font-mono text-xs uppercase tracking-widest">${tag}</span>`;
+            }).join('');
+
+            return `
+            <article class="border-b border-[#E5E5E0] py-6 hover:bg-[#F5F5F5] px-2 transition-colors duration-200" data-category="${lib.category}" data-name="${lib.name}">
+                <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-display text-2xl lg:text-3xl font-bold mb-2">${lib.name}</h3>
+                        <div class="flex flex-wrap items-center gap-2 mb-2">
+                            ${tagBadges}
+                            <span class="border border-[#111111] px-2 py-0.5 font-mono text-xs uppercase tracking-widest">${categoryLabel}</span>
+                            <span class="border border-[#111111] px-2 py-0.5 font-mono text-xs uppercase tracking-widest">ESM</span>
+                            <span class="font-mono text-xs text-[#737373]">Version <strong class="text-[#111111]">${lib.version}</strong></span>
+                            ${hasPkg}
+                        </div>
+                        <p class="font-body text-sm text-[#525252] leading-relaxed">${lib.description}</p>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <a href="${cdnUrl}" target="_blank" class="border border-[#111111] px-3 py-1 font-mono text-xs truncate max-w-[320px] text-[#111111] underline-offset-4 decoration-1 hover:decoration-[#CC0000] hover:underline transition-all duration-200" title="${cdnUrl}">${lib.name}@${lib.version}.system.js</a>
+                        <button onclick="copyUrl(this, '${cdnUrl}')" aria-label="Copy CDN URL" class="border border-[#111111] h-8 w-8 flex items-center justify-center hover:bg-[#111111] hover:text-[#F9F9F7] transition-all duration-200 cursor-pointer shrink-0">
+                            ${COPY_ICON}
+                        </button>
+                    </div>
+                </div>
+            </article>`;
+        }
+
+        function render(libraries) {
+            const listEl = document.getElementById('libraryList');
+            listEl.innerHTML = libraries.map(renderLibrary).join('');
+            document.getElementById('packageCount').textContent = `${libraries.length} packages`;
+        }
+
+        function applyFilters() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const articles = document.querySelectorAll('#libraryList article');
+            let visible = 0;
+
+            articles.forEach(article => {
+                const name = article.dataset.name.toLowerCase();
+                const category = article.dataset.category;
+                const matchSearch = !query || name.includes(query);
+                const matchFilter = activeFilter === 'all' || category === activeFilter;
+                const show = matchSearch && matchFilter;
+                article.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+
+            document.getElementById('emptyState').classList.toggle('hidden', visible > 0);
+        }
+
+        let activeFilter = 'all';
+        const filterBtns = document.querySelectorAll('[data-filter]');
+
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-[#111111]', 'text-[#F9F9F7]');
+                    b.classList.add('bg-transparent', 'text-[#111111]');
+                });
+                btn.classList.remove('bg-transparent', 'text-[#111111]');
+                btn.classList.add('bg-[#111111]', 'text-[#F9F9F7]');
+                activeFilter = btn.dataset.filter;
+                applyFilters();
+            });
+        });
+
+        // Load config and render
+        fetch('./libs.json')
+            .then(r => r.json())
+            .then(data => {
+                config = data;
+                render(data.libraries);
+            });
+    </script>
+
+</body>
+</html>

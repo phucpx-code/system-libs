@@ -1,0 +1,66 @@
+{
+  "baseUrl": "",
+  "libraries": [
+    {
+      "name": "zustand",
+      "entry": "zustand",
+      "version": "5.0.13",
+      "path": "/dist/zustand@5.0.13.system.js",
+      "category": "state",
+      "description": "Bear necessities for state management in React. Small, fast, scalable."
+    },
+    {
+      "name": "styled-components",
+      "entry": "styled-components",
+      "version": "6.4.2",
+      "path": "/dist/styled-components@6.4.2.system.js",
+      "category": "css-in-js",
+      "description": "Visual primitives for the component age. CSS for styling React components."
+    },
+    {
+      "name": "react-jsx-runtime",
+      "entry": "react/jsx-runtime",
+      "pkg": "react",
+      "version": "19.2.6",
+      "path": "/dist/react-jsx-runtime@19.2.6.system.js",
+      "category": "react",
+      "description": "React's automatic JSX runtime. Required for JSX transform in React 17+."
+    },
+    {
+      "name": "@emotion/cache",
+      "entry": "@emotion/cache",
+      "version": "11.14.0",
+      "path": "/dist/@emotion/cache@11.14.0.system.js",
+      "category": "css-in-js",
+      "tags": ["Emotion"],
+      "description": "Emotion's cache for managing inserted styles and sheet instances."
+    },
+    {
+      "name": "@emotion/react",
+      "entry": "@emotion/react",
+      "version": "11.14.0",
+      "path": "/dist/@emotion/react@11.14.0.system.js",
+      "category": "css-in-js",
+      "tags": ["Emotion"],
+      "description": "CSS-in-JS library designed for high performance style composition with React."
+    },
+    {
+      "name": "@emotion/styled",
+      "entry": "@emotion/styled",
+      "version": "11.14.1",
+      "path": "/dist/@emotion/styled@11.14.1.system.js",
+      "category": "css-in-js",
+      "tags": ["Emotion"],
+      "description": "Styled API for creating React components with styles attached using Emotion."
+    },
+    {
+      "name": "@mui/material",
+      "entry": "@mui/material",
+      "version": "9.0.1",
+      "path": "/dist/@mui/material@9.0.1.system.js",
+      "category": "ui",
+      "tags": ["Popular"],
+      "description": "Material UI — ready-to-use React components implementing Google's Material Design."
+    }
+  ]
+}
