@@ -28,7 +28,8 @@ export default libs.map(lib => {
   const pkgName = lib.pkg || lib.entry;
   const version = getVersion(pkgName);
   const outputName = `${lib.name}@${version}`.replace(/\//g, '__').replace('@', '');
-  const external = [...baseExternal, ...(lib.externals || [])];
+  const exclude = new Set(lib.excludeFromExternal || []);
+  const external = [...baseExternal, ...(lib.externals || [])].filter(e => !exclude.has(e));
 
   return {
     input: `src/${safeName(lib.name)}/index.js`,

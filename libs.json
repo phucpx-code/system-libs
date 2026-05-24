@@ -24,7 +24,8 @@
       "version": "19.2.6",
       "path": "/dist/react-jsx-runtime@19.2.6.system.js",
       "category": "react",
-      "description": "React's automatic JSX runtime. Required for JSX transform in React 17+."
+      "description": "React's automatic JSX runtime. Required for JSX transform in React 17+.",
+      "excludeFromExternal": ["react/jsx-runtime"]
     },
     {
       "name": "@emotion/cache",
