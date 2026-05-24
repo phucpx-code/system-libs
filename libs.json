@@ -18,6 +18,24 @@
       "description": "Visual primitives for the component age. CSS for styling React components."
     },
     {
+      "name": "react",
+      "entry": "react",
+      "version": "19.2.6",
+      "path": "/dist/react@19.2.6.system.js",
+      "category": "react",
+      "description": "A JavaScript library for building user interfaces.",
+      "excludeFromExternal": ["react"]
+    },
+    {
+      "name": "react-dom",
+      "entry": "react-dom",
+      "version": "19.2.6",
+      "path": "/dist/react-dom@19.2.6.system.js",
+      "category": "react",
+      "description": "React package for working with the DOM.",
+      "excludeFromExternal": ["react-dom"]
+    },
+    {
       "name": "react-jsx-runtime",
       "entry": "react/jsx-runtime",
       "pkg": "react",
