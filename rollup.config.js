@@ -22,14 +22,17 @@ function safeName(name) {
   return name.replace(/\//g, '__').replace('@', '');
 }
 
+const baseExternal = ['react', 'react-dom', 'react/jsx-runtime'];
+
 export default libs.map(lib => {
   const pkgName = lib.pkg || lib.entry;
   const version = getVersion(pkgName);
   const outputName = `${lib.name}@${version}`.replace(/\//g, '__').replace('@', '');
+  const external = [...baseExternal, ...(lib.externals || [])];
 
   return {
     input: `src/${safeName(lib.name)}/index.js`,
-    external: ['react', 'react-dom', 'react/jsx-runtime'],
+    external,
     output: {
       file: `dist/${lib.name}@${version}.system.js`,
       format: 'system',
