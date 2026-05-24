@@ -1,9 +1,12 @@
+import { createRequire } from 'module';
 import { readFileSync } from 'fs';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
+import json from '@rollup/plugin-json';
 import terser from '@rollup/plugin-terser';
 
+const require = createRequire(import.meta.url);
 const { libraries: libs } = JSON.parse(readFileSync('libs.json', 'utf-8'));
 
 const buildTime = new Date(Date.now() + 7 * 60 * 60 * 1000)
@@ -30,6 +33,9 @@ export default libs.map(lib => {
   const outputName = `${lib.name}@${version}`.replace(/\//g, '__').replace('@', '');
   const exclude = new Set(lib.excludeFromExternal || []);
   const external = [...baseExternal, ...(lib.externals || [])].filter(e => !exclude.has(e));
+  const aliasEntries = Object.fromEntries(
+    Object.entries(lib.alias || {}).map(([key, value]) => [key, require.resolve(value)])
+  );
 
   return {
     input: `src/${safeName(lib.name)}/index.js`,
@@ -38,11 +44,22 @@ export default libs.map(lib => {
       file: `dist/${lib.name}@${version}.system.js`,
       format: 'system',
       sourcemap: true,
+      inlineDynamicImports: true,
       banner: `/*! ${lib.name}@${version} | Built: ${buildTime} */`
     },
     plugins: [
-      resolve(),
+      {
+        name: 'lib-alias',
+        resolveId(source) {
+          return aliasEntries[source] || null;
+        }
+      },
+      resolve({
+        browser: true,
+        preferBuiltins: false
+      }),
       commonjs(),
+      json(),
       replace({
         'process.env.NODE_ENV': JSON.stringify('production'),
         preventAssignment: true

@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-replace": "^6.0.3",
     "@rollup/plugin-terser": "^0.4.4",
@@ -30,8 +31,13 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^9.0.1",
+    "@puckeditor/core": "^0.21.2",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.1",
+    "events": "^3.3.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "stream-browserify": "^3.0.0",
     "styled-components": "^6.4.2",
     "zustand": "^5.0.13"
   }

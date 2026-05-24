@@ -2,6 +2,20 @@
   "baseUrl": "",
   "libraries": [
     {
+      "name": "crypto",
+      "entry": "crypto-browserify",
+      "pkg": "crypto-browserify",
+      "version": "3.12.1",
+      "path": "/dist/crypto@3.12.1.system.js",
+      "category": "polyfill",
+      "description": "Browser polyfill for Node.js crypto.",
+      "alias": {
+        "buffer": "buffer/",
+        "stream": "stream-browserify",
+        "events": "events/"
+      }
+    },
+    {
       "name": "zustand",
       "entry": "zustand",
       "version": "5.0.13",
@@ -91,6 +105,15 @@
       "tags": ["Popular"],
       "description": "Material UI — ready-to-use React components implementing Google's Material Design.",
       "externals": ["@emotion/react", "@emotion/styled", "@emotion/cache"]
+    },
+    {
+      "name": "@puckeditor/core",
+      "entry": "@puckeditor/core",
+      "version": "0.21.2",
+      "path": "/dist/@puckeditor/core@0.21.2.system.js",
+      "category": "ui",
+      "description": "The open-source visual editor for React.",
+      "externals": ["react", "zustand"]
     }
   ]
 }
