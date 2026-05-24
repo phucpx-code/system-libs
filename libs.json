@@ -104,7 +104,7 @@
       "category": "ui",
       "tags": ["Popular"],
       "description": "Material UI — ready-to-use React components implementing Google's Material Design.",
-      "externals": ["@emotion/react", "@emotion/styled", "@emotion/cache"]
+      "externals": []
     },
     {
       "name": "react-icons/md",
