@@ -124,6 +124,15 @@
       "category": "ui",
       "description": "The open-source visual editor for React.",
       "externals": ["react", "zustand"]
+    },
+    {
+      "name": "main-system",
+      "entry": "main-system",
+      "version": "0.0.4",
+      "path": "/dist/main-system@0.0.4.system.js",
+      "copyFrom": "src/main-system/index.system.js",
+      "category": "custom",
+      "description": "Custom main system library."
     }
   ]
 }

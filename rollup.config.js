@@ -1,5 +1,6 @@
 import { createRequire } from 'module';
-import { readFileSync } from 'fs';
+import { readFileSync, copyFileSync, mkdirSync } from 'fs';
+import { dirname } from 'path';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
@@ -27,9 +28,17 @@ function safeName(name) {
 
 const baseExternal = ['react', 'react-dom', 'react/jsx-runtime'];
 
-export default libs.map(lib => {
+libs
+  .filter(lib => lib.copyFrom)
+  .forEach(lib => {
+    const outputFile = lib.path.replace(/^\//, '');
+    mkdirSync(dirname(outputFile), { recursive: true });
+    copyFileSync(lib.copyFrom, outputFile);
+  });
+
+export default libs.filter(lib => !lib.copyFrom).map(lib => {
   const pkgName = lib.pkg || lib.entry;
-  const version = getVersion(pkgName);
+  const version = lib.version || getVersion(pkgName);
   const outputName = `${lib.name}@${version}`.replace(/\//g, '__').replace('@', '');
   const exclude = new Set(lib.excludeFromExternal || []);
   const external = [...baseExternal, ...(lib.externals || [])].filter(e => !exclude.has(e));
@@ -40,6 +49,12 @@ export default libs.map(lib => {
   return {
     input: `src/${safeName(lib.name)}/index.js`,
     external,
+    onwarn(warning, warn) {
+      if (warning.code === 'CIRCULAR_DEPENDENCY') return;
+      if (warning.code === 'MODULE_LEVEL_DIRECTIVE') return;
+      if (warning.code === 'NAMESPACE_CONFLICT') return;
+      warn(warning);
+    },
     output: {
       file: `dist/${lib.name}@${version}.system.js`,
       format: 'system',
